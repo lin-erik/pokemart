@@ -1,0 +1,24 @@
+{
+  "name": "pokemart",
+  "version": "1.0.0",
+  "description": "Virtual marketplace for purchase of Pokemon.",
+  "main": "index.js",
+  "scripts": {
+    "start": "nodemon ./server/app.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/lin-erik/pokemart.git"
+  },
+  "keywords": [],
+  "author": "Erik",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/lin-erik/pokemart/issues"
+  },
+  "homepage": "https://github.com/lin-erik/pokemart#readme",
+  "dependencies": {
+    "express": "^4.16.3",
+    "mysql": "^2.15.0"
+  }
+}
