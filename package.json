@@ -4,7 +4,7 @@
   "description": "Virtual marketplace for purchase of Pokemon.",
   "main": "index.js",
   "scripts": {
-    "start": "nodemon ./server/app.js"
+    "start": "nodemon ./server/server.js"
   },
   "repository": {
     "type": "git",
