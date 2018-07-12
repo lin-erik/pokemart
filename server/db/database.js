@@ -2,7 +2,7 @@ const mysql = require('mysql');
 
 const db = mysql.createConnection({
   user: 'root',
-  password: 'passwprd',
+  password: 'password',
   database: 'pokemon'
 });
 
