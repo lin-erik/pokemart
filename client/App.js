@@ -1,8 +1,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import { BrowserRouter as Router, Route, Link } from 'react-router-dom';
 
-import Landing from './Landing.js';
 import CurrentPokemon from './CurrentPokemon.js';
 import Pokemon from './Pokemon.js';
 
@@ -100,16 +98,10 @@ class App extends React.Component {
 
   render() {
     return(
-      // <Router>
         <div>
-          {/* <Route path='/' exact render={() => (
-            <Landing />
-          )}/> */}
-
           <CurrentPokemon currentPokemon={this.state.currentPokemon} />
           <Pokemon currentPokemon={this.state.currentPokemon} pokemon={this.state.pokemon} change={this.changeCurrent} delete={this.delClicked} />
         </div>
-      // </Router>
     );
   }
 };

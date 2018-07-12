@@ -2,6 +2,7 @@ import React from 'react';
 
 const Pokemon = (props) => (
   <div>
+    Owned Pokemon
     {props.pokemon.map(poke => {
       if (poke.pokemonId !== props.currentPokemon.pokemonId) {
       return (
