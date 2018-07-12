@@ -4,7 +4,8 @@
   "description": "Virtual marketplace for purchase of Pokemon.",
   "main": "index.js",
   "scripts": {
-    "start": "nodemon ./server/server.js"
+    "start": "nodemon ./server/server.js",
+    "compile": "webpack -d --watch"
   },
   "repository": {
     "type": "git",
@@ -18,7 +19,23 @@
   },
   "homepage": "https://github.com/lin-erik/pokemart#readme",
   "dependencies": {
+    "babel": "^6.23.0",
+    "babel-core": "^6.26.3",
+    "babel-loader": "^7.1.5",
+    "babel-plugin-react": "^1.0.0",
+    "babel-preset-env": "^1.7.0",
+    "babel-preset-react": "^6.24.1",
+    "babel-preset-stage-0": "^6.24.1",
     "express": "^4.16.3",
-    "mysql": "^2.15.0"
-  }
+    "mysql": "^2.15.0",
+    "nodemon": "^1.18.0",
+    "react": "^16.4.1",
+    "react-dom": "^16.4.1",
+    "react-router-dom": "^4.3.1",
+    "webpack": "2.6.1"
+  },
+  "devDependencies": {
+    "webpack-cli": "^3.0.8"
+  },
+  "proxy": "http://localhost:8080"
 }
