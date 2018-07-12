@@ -1,9 +1,10 @@
-DROP DATABASE IF EXISTS poke;
-CREATE DATABASE poke;
+USE pokemon;
 
-USE poke;
-
-CREATE TABLE pokemon(
-  pokemon_id INT PRIMARY KEY,
-  pokemon_name VARCHAR(255),
+CREATE TABLE allPokemon (
+  pokemonId INT PRIMARY KEY UNIQUE,
+  pokeName VARCHAR(255),
+  pokeNorm VARCHAR(255),
+  pokeShiny VARCHAR(255),
+  pokeHeight INT,
+  pokeWeight INT
 );
