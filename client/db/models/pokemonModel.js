@@ -21,10 +21,10 @@ module.exports = {
   },
 
   delete: function({pokemonId}, cb) {
-    var command = `DELETE from allPokemon WHERE pokemonId = ${pokemonId}`;
+    var command = `DELETE from userAndPokemon WHERE user_id = 1 AND poke_id = ${pokemonId}`;
 
     db.query(command, (err, data) => {
-      console.log('Deleted from mySQL');
+      console.log('Deleted from mySQL', pokemonId);
     });
   },
 
