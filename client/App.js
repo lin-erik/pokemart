@@ -1,8 +1,11 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
+const script = require('./scripts/index.js');
 
 import CurrentPokemon from './CurrentPokemon.js';
+import DailyPokemon from './DailyPokemon.js';
 import Pokemon from './Pokemon.js';
+import Login from './Login.js';
 
 class App extends React.Component {
   constructor(props) {
@@ -10,42 +13,14 @@ class App extends React.Component {
 
     this.state = {
       currentPokemon: [],
-      pokemon: []
+      dailyPokemon: [],
+      pokemon: [],
+      userId: 1
+      // login: false
     }
 
     this.changeCurrent = this.changeCurrent.bind(this);
     this.delClicked = this.delClicked.bind(this);
-  }
-
-  getPokemon() {
-    fetch('https://pokeapi.co/api/v2/pokemon/151/', {
-      method: 'GET'
-    })
-      .then(res => res.json())
-      .catch(err => console.error('Error fetching from API', err))
-      .then(response => {
-        this.save(response);
-        
-        console.log('This is the response from API', response);
-      });
-    };
-    
-  save({height, id, name, sprites, weight}) {
-    var pokemonData = {
-      pokemonId: id,
-      pokeName: name,
-      pokeNorm: sprites.front_default,
-      pokeShiny: sprites.front_shiny,
-      pokeHeight: height,
-      pokeWeight: weight
-    }
-
-    fetch('http://localhost:8080/pokemon', {
-      method: 'POST',
-      body: JSON.stringify(pokemonData)
-    })
-      .then(res => res.json())
-      .catch(err => console.error('Error saving', err));
   }
   
   changeCurrent(poke) {
@@ -76,29 +51,52 @@ class App extends React.Component {
       .then(res => res.json())
       .catch(err => console.error('Error deleting', err));
   }
+
+  dailyPokemon() {
+    var num = Math.floor(Math.random() * (720 + 1));
+    script.getPokemon(num);
+
+    fetch('http://localhost:8080/pokemon', {
+        method: 'GET'
+      })
+      .then(res => res.json())
+      .catch(err => console.error('Error fetching from database', err))
+      .then(response => {
+        var idx = Math.floor(Math.random() * (response.length));
+
+        this.setState({
+          dailyPokemon: response[idx]
+        });
+
+        console.log('This is the response from database', response);
+      });
+    }
+    
+    userPokemon() {
+      fetch('http://localhost:8080/userAndPokemon', {
+        method: 'GET'
+      })
+      .then(res => res.json())
+      .catch(err => console.error('Error fetching user Pokemon', err))
+      .then(response => {
+        this.setState({
+          pokemon: response
+        });
+
+        console.log('This is the list of Pokemon', this.state.pokemon);
+      });
+    }
   
   componentDidMount() {
-    fetch('http://localhost:8080/pokemon', {
-      method: 'GET'
-    })
-    .then(res => res.json())
-    .catch(err => console.error('Error fetching from database', err))
-    .then(response => {
-      this.setState({
-        currentPokemon: response[0],
-        pokemon: response
-      });
-      
-      console.log('This is the response from database', response);
-      console.log('This is the list of Pokemon', this.state.pokemon);
-    });
-    
-    // this.getPokemon();
+    this.dailyPokemon();
+    this.userPokemon();
   }
 
   render() {
     return(
         <div>
+          <Login />
+          <DailyPokemon dailyPokemon={this.state.dailyPokemon} userId={this.state.userId} />
           <CurrentPokemon currentPokemon={this.state.currentPokemon} />
           <Pokemon currentPokemon={this.state.currentPokemon} pokemon={this.state.pokemon} change={this.changeCurrent} delete={this.delClicked} />
         </div>
