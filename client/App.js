@@ -21,6 +21,7 @@ class App extends React.Component {
 
     this.changeCurrent = this.changeCurrent.bind(this);
     this.delClicked = this.delClicked.bind(this);
+    this.handleBuy = this.handleBuy.bind(this);
   }
   
   changeCurrent(poke) {
@@ -40,16 +41,7 @@ class App extends React.Component {
       pokemon: updated
     });
 
-    this.delPokemon(poke);
-  }
-
-  delPokemon(poke) {
-    fetch('http://localhost:8080/delete', {
-      method: 'DELETE',
-      body: JSON.stringify(poke)
-    })
-      .then(res => res.json())
-      .catch(err => console.error('Error deleting', err));
+    script.delPokemon(poke);
   }
 
   dailyPokemon() {
@@ -70,6 +62,18 @@ class App extends React.Component {
 
         console.log('This is the response from database', response);
       });
+    }
+
+    handleBuy(poke) {
+      var updated = this.state.pokemon;
+      updated.push(poke);
+      console.log(updated);
+
+      this.setState({
+        pokemon: updated
+      });
+
+      script.buyPokemon(poke, this.state.userId);
     }
     
     userPokemon() {
@@ -96,7 +100,7 @@ class App extends React.Component {
     return(
         <div>
           <Login />
-          <DailyPokemon dailyPokemon={this.state.dailyPokemon} userId={this.state.userId} />
+          <DailyPokemon dailyPokemon={this.state.dailyPokemon} userId={this.state.userId} handleBuy={this.handleBuy} />
           <CurrentPokemon currentPokemon={this.state.currentPokemon} />
           <Pokemon currentPokemon={this.state.currentPokemon} pokemon={this.state.pokemon} change={this.changeCurrent} delete={this.delClicked} />
         </div>
