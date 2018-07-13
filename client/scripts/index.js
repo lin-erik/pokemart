@@ -41,5 +41,14 @@ module.exports = {
     })
       .then(res => res.json())
       .catch(err => console.error('Error buying', err));
+  },
+
+  delPokemon(poke) {
+    fetch('http://localhost:8080/delete', {
+        method: 'DELETE',
+        body: JSON.stringify(poke)
+      })
+      .then(res => res.json())
+      .catch(err => console.error('Error deleting', err));
   }
 }
