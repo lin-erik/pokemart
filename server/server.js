@@ -21,7 +21,6 @@ app.get('/userAndPokemon', (req, res) => {
     if (err) {
       console.error('Error getting user Pokemon', err);
     } else {
-      console.log(data);
       res.send(data);
     }
   });
