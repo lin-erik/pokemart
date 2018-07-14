@@ -2,109 +2,110 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 const script = require('./scripts/index.js');
 
-import CurrentPokemon from './CurrentPokemon.js';
-import DailyPokemon from './DailyPokemon.js';
-import Pokemon from './Pokemon.js';
 import Login from './Login.js';
+import Landing from './Landing.js';
+import Signup from './Signup.js';
 
 class App extends React.Component {
   constructor(props) {
     super(props)
 
     this.state = {
-      currentPokemon: [],
-      dailyPokemon: [],
-      pokemon: [],
-      userId: 1
-      // login: false
+      user: '',
+      password: '',
+      login: false,
+      userId: ''
     }
 
-    this.changeCurrent = this.changeCurrent.bind(this);
-    this.delClicked = this.delClicked.bind(this);
-    this.handleBuy = this.handleBuy.bind(this);
-  }
-  
-  changeCurrent(poke) {
-    this.setState({
-      currentPokemon: poke
-    });
+    this.handleUserChange = this.handleUserChange.bind(this);
+    this.handlePasswordChange = this.handlePasswordChange.bind(this);
+    this.handleLogin = this.handleLogin.bind(this);
+    this.handleSignup = this.handleSignup.bind(this);
   }
 
-  delClicked(poke) {
-    var allPoke = this.state.pokemon;
-    this.state.pokemon.splice(this.state.pokemon.indexOf(poke), 1);
-
-    var updated = allPoke;
-    console.log(updated);
-
-    this.setState({
-      pokemon: updated
-    });
-
-    script.delPokemon(poke);
-  }
-
-  dailyPokemon() {
-    var num = Math.floor(Math.random() * (720 + 1));
-    script.getPokemon(num);
-
-    fetch('http://localhost:8080/pokemon', {
-        method: 'GET'
-      })
-      .then(res => res.json())
-      .catch(err => console.error('Error fetching from database', err))
-      .then(response => {
-        var idx = Math.floor(Math.random() * (response.length));
-
-        this.setState({
-          dailyPokemon: response[idx]
-        });
-
-        console.log('This is the response from database', response);
-      });
-    }
-
-    handleBuy(poke) {
-      var updated = this.state.pokemon;
-      updated.push(poke);
-      console.log(updated);
-
+    handleUserChange(e) {
       this.setState({
-        pokemon: updated
+        user: e.target.value
       });
 
-      script.buyPokemon(poke, this.state.userId);
+      console.log('The current user', this.state.user);
     }
-    
-    userPokemon() {
-      fetch('http://localhost:8080/userAndPokemon', {
-        method: 'GET'
+
+    handlePasswordChange(e) {
+      this.setState({
+        password: e.target.value
+      });
+    }
+
+    handleLogin() {
+      var data = {
+        user: this.state.user,
+        password: this.state.password
+      }
+
+      fetch('http://localhost:8080/login', {
+        method: 'POST',
+        body: JSON.stringify(data)
       })
-      .then(res => res.json())
-      .catch(err => console.error('Error fetching user Pokemon', err))
-      .then(response => {
-        this.setState({
-          pokemon: response
-        });
+        .then(res => res.json())
+        .catch(err => console.error('Error logging in', err))
+        .then(response => {
+          console.log('Log in response', response[0].id);
 
-        console.log('This is the list of Pokemon', this.state.pokemon);
-      });
+          if (response[0].id) {
+            this.setState({
+              userId: response[0].id,
+              login: true
+            })
+          }
+        });
     }
-  
-  componentDidMount() {
-    this.dailyPokemon();
-    this.userPokemon();
-  }
+
+    handleSignup() {
+      var data = {
+        user: this.state.user,
+        password: this.state.password
+      }
+
+      fetch('http://localhost:8080/signup', {
+        method: 'POST',
+        body: JSON.stringify(data)
+      })
+        .then(res => res.json())
+        .catch(err => console.error('Error logging in', err))
+        .then( () => {
+          this.handleLogin();
+        });
+    }
 
   render() {
-    return(
+    if (this.state.login) {
+      return(<Landing userId={this.state.userId} />)
+    } else {
+      return(
         <div>
-          <Login />
-          <DailyPokemon dailyPokemon={this.state.dailyPokemon} userId={this.state.userId} handleBuy={this.handleBuy} />
-          <CurrentPokemon currentPokemon={this.state.currentPokemon} />
-          <Pokemon currentPokemon={this.state.currentPokemon} pokemon={this.state.pokemon} change={this.changeCurrent} delete={this.delClicked} />
+          <Login handleUserChange={this.handleUserChange} handlePasswordChange={this.handlePasswordChange} handleLogin={this.handleLogin} login={this.state.login} />
+          <Signup handleUserChange={this.handleUserChange} handlePasswordChange={this.handlePasswordChange} handleSignup={this.handleSignup} />
         </div>
-    );
+      )
+    }
+
+    //   <Router>
+    //     <div>
+          {/* <Route path='/' exact render={() => ( */}
+            // <Login handleUserChange={this.handleUserChange} handlePasswordChange={this.handlePasswordChange} handleLogin={this.handleLogin} login={this.state.login} />
+          {/* )} /> */}
+
+      //     <Landing
+
+          
+      //     <Route path='/home' component={Landing} />
+
+
+      //   </div>
+      // </Router>
+
+    // );
   }
 };
 
