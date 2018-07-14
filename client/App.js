@@ -1,6 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 const script = require('./scripts/index.js');
+import { Button, Collapse, Well } from 'react-bootstrap';
 
 import Login from './Login.js';
 import Landing from './Landing.js';
@@ -14,7 +15,9 @@ class App extends React.Component {
       user: '',
       password: '',
       login: false,
-      userId: ''
+      userId: '',
+      openLogin: false,
+      signLogin: false
     }
 
     this.handleUserChange = this.handleUserChange.bind(this);
@@ -80,12 +83,33 @@ class App extends React.Component {
 
   render() {
     if (this.state.login) {
-      return(<Landing userId={this.state.userId} />)
+      return(<Landing userId={this.state.userId} user={this.state.user} />)
     } else {
       return(
-        <div>
-          <Login handleUserChange={this.handleUserChange} handlePasswordChange={this.handlePasswordChange} handleLogin={this.handleLogin} login={this.state.login} />
-          <Signup handleUserChange={this.handleUserChange} handlePasswordChange={this.handlePasswordChange} handleSignup={this.handleSignup} />
+        <div className='row'>
+          <div className='col-md-6'>
+            <Button onClick={() => this.setState({openLogin: !this.state.openLogin})}>
+              Login
+            </Button>
+
+            <Collapse in={this.state.openLogin}>
+              <Well>
+                <Login handleUserChange={this.handleUserChange} handlePasswordChange={this.handlePasswordChange} handleLogin={this.handleLogin} login={this.state.login} />
+              </Well>
+            </Collapse>
+          </div>
+
+          <div className='col-md-6'>
+            <Button onClick={() => this.setState({signLogin: !this.state.signLogin})}>
+              Sign Up
+            </Button>
+
+            <Collapse in={this.state.signLogin}>
+              <Well>
+                <Signup handleUserChange={this.handleUserChange} handlePasswordChange={this.handlePasswordChange} handleSignup={this.handleSignup} />
+              </Well>
+            </Collapse>
+          </div>
         </div>
       )
     }
