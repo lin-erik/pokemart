@@ -16,14 +16,47 @@ app.get('/pokemon', (req, res) => {
   });
 });
 
-app.get('/userAndPokemon', (req, res) => {
-  models.getUserPokemon((err, data) => {
-    if (err) {
-      console.error('Error getting user Pokemon', err);
-    } else {
-      res.send(data);
-    }
-  });
+app.post('/allpokemon', (req, res) => {
+  var body;
+
+  req.on('data', (data) => {body = JSON.parse(data)})
+     .on('end', () => {
+       console.log('UaP being processed', body)
+
+       models.getUserPokemon(body, (err, data) => {
+         if (err) {
+           console.error('Error getting user Pokemon', err);
+         } else {
+           res.send(data);
+         }
+       });
+     });
+});
+
+app.post('/user', (req, res) => {
+  var body;
+
+  req.on('data', (data) => {body = JSON.parse(data)})
+     .on('end', () => {
+       console.log('WALLET being processed', body)
+
+       models.wallet(body, (err, data) => {
+          res.send(data);
+       });
+     });
+});
+
+app.post('/wallet', (req, res) => {
+  var body;
+
+  req.on('data', (data) => {body = JSON.parse(data)})
+     .on('end', () => {
+       console.log('UPDATING WALLET', body)
+
+       models.updateWallet(body, (err, data) => {
+          res.send();
+       });
+     });
 });
 
 app.post('/pokemon', (req, res) => {
@@ -52,20 +85,33 @@ app.post('/userAndPokemon', (req, res) => {
      });
 });
 
-// app.post('/login', (req, res) => {
-//   var body;
+app.post('/login', (req, res) => {
+  var body;
 
-//   req.on('data', (data) => {body = JSON.parse(data)})
-//      .on('end', () => {
-//         console.log('LOGIN being processed', body);
+  req.on('data', (data) => {body = JSON.parse(data)})
+     .on('end', () => {
+        console.log('LOGIN being processed');
 
-//         models.login(body, (err, data) => {
-//           console.log('Data from login POST', data);
+        models.login(body, (err, data) => {
+          res.send(JSON.stringify(data));
+        });
+     });
+});
 
-//           res.send(data);
-//         });
-//      });
-// });
+app.post('/signup', (req, res) => {
+  var body;
+
+  req.on('data', (data) => {body = JSON.parse(data)})
+     .on('end', () => {
+       console.log('SIGNUP being processed');
+
+       models.signup(body, (err, data) => {
+         console.log('Signed up as', data);
+
+          res.send(data);
+       });
+     })
+});
 
 app.delete('/delete', (req, res) => {
   var body;
@@ -79,6 +125,10 @@ app.delete('/delete', (req, res) => {
         });
      });
 });
+
+// app.get('/*', (req, res) => {
+//   res.redirect('/');
+// });
 
 app.listen(8080, () => {
   console.log('Listening on 8080');
