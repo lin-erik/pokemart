@@ -1,10 +1,12 @@
 const express = require('express');
 const models = require('../client/db/models/pokemonModel.js');
 const path = require('path');
+const cors = require('cors');
 
 const app = express();
 
 app.use(express.static(__dirname + '/../client/dist/'));
+app.use(cors());
 
 app.get('/pokemon', (req, res) => {
   models.get((err, data) => {

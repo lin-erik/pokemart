@@ -19,4 +19,4 @@ CREATE TABLE users (
 CREATE TABLE userAndPokemon (
   user_id INT,
   poke_id INT
-)
+);
