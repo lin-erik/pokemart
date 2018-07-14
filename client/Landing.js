@@ -49,7 +49,7 @@ class Landing extends React.Component {
     }
 
     dailyPokemon() {
-      fetch('http://localhost:8080/pokemon', {
+      fetch('/pokemon', {
           method: 'GET'
         })
         .then(res => res.json())
@@ -88,7 +88,7 @@ class Landing extends React.Component {
     }
 
     userPokemon(userId) {
-      fetch('http://localhost:8080/allpokemon', {
+      fetch('/allpokemon', {
           method: 'POST',
           body: JSON.stringify(userId)
         })
@@ -104,7 +104,7 @@ class Landing extends React.Component {
     }
 
     getWallet(userId) {
-      fetch('http://localhost:8080/user', {
+      fetch('/user', {
         method: 'POST',
         body: JSON.stringify(userId)
       })

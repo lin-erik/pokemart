@@ -46,7 +46,7 @@ class App extends React.Component {
         password: this.state.password
       }
 
-      fetch('http://localhost:8080/login', {
+      fetch('/login', {
         method: 'POST',
         body: JSON.stringify(data)
       })
@@ -70,7 +70,7 @@ class App extends React.Component {
         password: this.state.password
       }
 
-      fetch('http://localhost:8080/signup', {
+      fetch('/signup', {
         method: 'POST',
         body: JSON.stringify(data)
       })

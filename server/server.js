@@ -132,8 +132,8 @@ app.delete('/delete', (req, res) => {
 //   res.redirect('/');
 // });
 
-const where = process.env.PORT;
+const where = process.env.PORT || 8080;
 
-app.listen(where || 8080, () => {
+app.listen(where, () => {
   console.log('Listening on 8080');
 });

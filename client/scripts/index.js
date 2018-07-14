@@ -1,5 +1,4 @@
 module.exports = {
-
   getPokemon: function(num) {
     fetch(`https://pokeapi.co/api/v2/pokemon/${num}/`, {
       method: 'GET'
@@ -23,7 +22,7 @@ module.exports = {
       pokeWeight: weight
     }
 
-    fetch('http://localhost:8080/pokemon', {
+    fetch('/pokemon', {
       method: 'POST',
       body: JSON.stringify(pokemonData)
     })
@@ -35,7 +34,7 @@ module.exports = {
     poke.userId = userId;
     console.log('Bought this', poke);
 
-    fetch('http://localhost:8080/userAndPokemon', {
+    fetch('/userAndPokemon', {
       method: 'POST',
       body: JSON.stringify(poke)
     })
@@ -49,7 +48,7 @@ module.exports = {
       pokemonId: poke.poke_id
     }
 
-    fetch('http://localhost:8080/delete', {
+    fetch('/delete', {
         method: 'DELETE',
         body: JSON.stringify(data)
       })
@@ -63,7 +62,7 @@ module.exports = {
       money: money
     }
 
-    fetch('http://localhost:8080/wallet', {
+    fetch('/wallet', {
       method: 'POST',
       body: JSON.stringify(data)
     })
