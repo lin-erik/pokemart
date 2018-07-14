@@ -43,12 +43,31 @@ module.exports = {
       .catch(err => console.error('Error buying', err));
   },
 
-  delPokemon(poke) {
+  delPokemon(userId, poke) {
+    var data = {
+      userId: userId,
+      pokemonId: poke.poke_id
+    }
+
     fetch('http://localhost:8080/delete', {
         method: 'DELETE',
-        body: JSON.stringify(poke)
+        body: JSON.stringify(data)
       })
       .then(res => res.json())
       .catch(err => console.error('Error deleting', err));
+  },
+
+  updateWallet(userId, money) {
+    var data = {
+      userId: userId,
+      money: money
+    }
+
+    fetch('http://localhost:8080/wallet', {
+      method: 'POST',
+      body: JSON.stringify(data)
+    })
+      .then(res => res.json())
+      .catch(err => console.error('Erorr updating wallet', err));
   }
 }
