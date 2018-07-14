@@ -1,8 +1,8 @@
 import React from 'react';
 
-import CurrentPokemon from './CurrentPokemon.js';
-import DailyPokemon from './DailyPokemon.js';
+import Header from './Header.js';
 import Pokemon from './Pokemon.js';
+import Middle from './Middle.js';
 
 const script = require('./scripts/index.js');
 
@@ -15,12 +15,14 @@ class Landing extends React.Component {
       dailyPokemon: [],
       pokemon: [],
       wallet: 0,
-      value: 0
+      value: 0,
+      bought: false
     }
 
     this.changeCurrent = this.changeCurrent.bind(this);
     this.delClicked = this.delClicked.bind(this);
     this.handleBuy = this.handleBuy.bind(this);
+    this.dailyPokemon = this.dailyPokemon.bind(this);
     }
 
     changeCurrent(poke) {
@@ -47,9 +49,6 @@ class Landing extends React.Component {
     }
 
     dailyPokemon() {
-      var num = Math.floor(Math.random() * (720 + 1));
-      script.getPokemon(num);
-
       fetch('http://localhost:8080/pokemon', {
           method: 'GET'
         })
@@ -60,7 +59,8 @@ class Landing extends React.Component {
 
           this.setState({
             dailyPokemon: response[idx],
-            value: Math.floor(Math.random() * (2500 + 1))
+            value: Math.floor(Math.random() * (2500 + 1)),
+            bought: false
           });
 
           console.log('This is the response from database', response);
@@ -78,9 +78,10 @@ class Landing extends React.Component {
       } else {
         this.setState({
           pokemon: updated,
-          wallet: updatedWallet
+          wallet: updatedWallet,
+          bought: true
         });
-  
+
         script.buyPokemon(poke, this.props.userId);
         script.updateWallet(this.props.userId, updatedWallet);
       }
@@ -122,19 +123,27 @@ class Landing extends React.Component {
         });
     }
 
+    apiPokemon() {
+      var num = Math.floor(Math.random() * (720 + 1));
+      script.getPokemon(num);
+    }
+
     componentDidMount() {
       this.dailyPokemon();
+      this.apiPokemon();
       this.userPokemon(this.props.userId);
       this.getWallet(this.props.userId);
     }
 
   render() {
     return(
-      <div>
-        <div>{this.state.wallet}</div>
-        <DailyPokemon dailyPokemon={this.state.dailyPokemon} userId={this.props.userId} handleBuy={this.handleBuy} value={this.state.value} />
-        <CurrentPokemon currentPokemon={this.state.currentPokemon} />
+      <div align='center'>
+        <Header user={this.props.user} wallet={this.state.wallet} dailyPokemon={this.dailyPokemon} />
+
+        <Middle bought={this.state.bought} dailyPokemon={this.state.dailyPokemon} userId={this.props.userId} handleBuy={this.handleBuy} value={this.state.value} currentPokemon={this.state.currentPokemon} />
+        
         <Pokemon currentPokemon={this.state.currentPokemon} pokemon={this.state.pokemon} change={this.changeCurrent} delete={this.delClicked} />
+
       </div>
     )
   }
