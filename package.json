@@ -4,7 +4,7 @@
   "description": "Virtual marketplace for purchase of Pokemon.",
   "main": "index.js",
   "scripts": {
-    "start": "nodemon ./server/server.js",
+    "start": "node ./server/server.js",
     "compile": "webpack -d --watch"
   },
   "repository": {
@@ -19,6 +19,8 @@
   },
   "homepage": "https://github.com/lin-erik/pokemart#readme",
   "dependencies": {
+    "@okta/okta-auth-js": "^1.17.0",
+    "@okta/okta-react": "^1.0.2",
     "babel": "^6.23.0",
     "babel-core": "^6.26.3",
     "babel-loader": "^7.1.5",
