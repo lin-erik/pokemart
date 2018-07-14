@@ -1,16 +1,51 @@
 import React from 'react';
 import { Form, FormControl, FormGroup, Col, Button } from 'react-bootstrap';
 
-class Login extends React.Component {
-  constructor(props) {
-    super(props)
+import { BrowserRouter as Router, Route, Link, Redirect, withRouter } from 'react-router-dom';
 
-    this.state = {
-      user: '',
-      password: '',
-      login: false
-    }
-  }
+const Login = (props) => {
+  return(
+      <div>
+        <Form horizontal>
+          <FormGroup controlId='formUsername'>
+            <Col sm={2}>
+              Username
+            </Col>
+            <Col sm={10}>
+              <FormControl onChange={ (e) => {props.handleUserChange(e) }} placeholder='Username' />
+            </Col>
+          </FormGroup>
+
+          <FormGroup controlId='formPassword'>
+            <Col sm={2}>
+              Password
+            </Col>
+            <Col sm={10}>
+              <FormControl onChange={ (e) => {props.handlePasswordChange(e) }} type='password' placeholder='Password' />
+            </Col>
+          </FormGroup>
+
+          <FormGroup>
+            <Col smOffset={2} sm={10}>
+              {/* <Button onClick={ (e) => {return this.handleClick() }}>Sign in</Button> */}
+
+              <Link to='/home'>
+              <Button onClick={ () => { return props.handleLogin() }}>Sign in</Button>
+              </Link>
+              
+            </Col>
+          </FormGroup>
+        </Form>
+      </div>
+  )
+}
+
+// class Login extends React.Component {
+//   constructor(props) {
+//     super(props)
+
+//     this.state = {}
+  // }
 
   // handleClick() {
   //   var data = {
@@ -29,52 +64,41 @@ class Login extends React.Component {
   //     });
   // }
 
-  handleUserChange(e) {
-    this.setState({
-      user: e.target.value
-    });
+//   render() {
+//     return(
+//       <div>
+//         <Form horizontal>
+//           <FormGroup controlId='formUsername'>
+//             <Col sm={2}>
+//               Username
+//             </Col>
+//             <Col sm={10}>
+//               <FormControl onChange={ (e) => {props.handleUserChange(e) }} placeholder='Username' />
+//             </Col>
+//           </FormGroup>
 
-    console.log('The current user', this.state.user);
-  }
+//           <FormGroup controlId='formPassword'>
+//             <Col sm={2}>
+//               Password
+//             </Col>
+//             <Col sm={10}>
+//               <FormControl onChange={ (e) => {props.handlePasswordChange(e) }} type='password' placeholder='Password' />
+//             </Col>
+//           </FormGroup>
 
-  handlePasswordChange(e) {
-    this.setState({
-      password: e.target.value
-    });
-  }
+//           <FormGroup>
+//             <Col smOffset={2} sm={10}>
+//               {/* <Button onClick={ (e) => {return this.handleClick() }}>Sign in</Button> */}
+//                 <Link to='home'>
+//                   <Button>Sign in</Button>
+//                 </Link>
+//             </Col>
+//           </FormGroup>
+//         </Form>
+//       </div>
+//     )
+//   }
 
-  render() {
-    return(
-      <div>
-        <Form horizontal>
-          <FormGroup controlId='formUsername'>
-            <Col sm={2}>
-              Username
-            </Col>
-            <Col sm={10}>
-              <FormControl value={this.state.user} onChange={ (e) => {this.handleUserChange(e) }} placeholder='Username' />
-            </Col>
-          </FormGroup>
-
-          <FormGroup controlId='formPassword'>
-            <Col sm={2}>
-              Password
-            </Col>
-            <Col sm={10}>
-              <FormControl value={this.state.password} onChange={ (e) => {this.handlePasswordChange(e) }} type='password' placeholder='Password' />
-            </Col>
-          </FormGroup>
-
-          <FormGroup>
-            <Col smOffset={2} sm={10}>
-              <Button onClick={ (e) => {return this.handleClick() }}>Sign in</Button>
-            </Col>
-          </FormGroup>
-        </Form>
-      </div>
-    )
-  }
-
-}
+// }
 
 export default Login;
