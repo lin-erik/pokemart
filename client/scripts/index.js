@@ -7,8 +7,6 @@ module.exports = {
     .catch(err => console.error('Error fetching from API', err))
     .then(response => {
       this.save(response);
-      
-      console.log('This is the response from API', response);
     });
   },
     
