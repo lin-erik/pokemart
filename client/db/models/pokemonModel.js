@@ -2,29 +2,41 @@ const db = require('../config.js');
 
 module.exports = {
   get: function(cb) {
-    db.query('SELECT * from allPokemon', (err, results) => {
-      if (err) {
-        cb(err);
-      } else {
-        cb(null, results);
-      }
+    db.getConnection( (err, conn) => {
+      conn.query('SELECT * from allPokemon', (err, results) => {
+        if (err) {
+          cb(err);
+        } else {
+          cb(null, results);
+        }
+      });
+      
+      conn.release();
     });
   },
 
   post: function({pokemonId, pokeName, pokeNorm, pokeShiny, pokeHeight, pokeWeight}, cb) {
     var command = `INSERT INTO allPokemon VALUES (?, ?, ?, ?, ?, ?)`;
     var params = [pokemonId, pokeName, pokeNorm, pokeShiny, pokeHeight, pokeWeight];
-
-    db.query(command, params, (err, data) => {
-      console.log('Saved to mySQL');
+    
+    db.getConnection( (err, conn) => {
+      conn.query(command, params, (err, data) => {
+        console.log('Saved to mySQL');
+      });
+    
+      conn.release();
     });
   },
 
   delete: function({userId, pokemonId}, cb) {
     var command = `DELETE from userAndPokemon WHERE user_id = ${userId} AND poke_id = ${pokemonId}`;
 
-    db.query(command, (err, data) => {
-      console.log('Deleted from mySQL');
+    db.getConnection( (err, conn) => {
+      conn.query(command, (err, data) => {
+        console.log('Deleted from mySQL');
+      });
+
+      conn.release();
     });
   },
 
@@ -32,8 +44,12 @@ module.exports = {
     var command = `INSERT INTO userAndPokemon VALUES (?, ?)`;
     var params = [userId, pokemonId];
 
-    db.query(command, params, (err, data) => {
-      console.log('Saved to userAndPokemon');
+    db.getConnection( (err, conn) => {
+      conn.query(command, params, (err, data) => {
+        console.log('Saved to userAndPokemon');
+      });
+
+      conn.release();
     });
   },
 
@@ -43,12 +59,16 @@ module.exports = {
                    INNER JOIN allPokemon p ON p.pokemonId = up.poke_id
                    WHERE up.user_id = ${data}`
 
-    db.query(command, (err, results) => {
-      if (err) {
-        console.error('Error interacting with database', err, data);
-      } else {
-        cb(null, results);
-      }
+    db.getConnection( (err, conn) =>{
+      conn.query(command, (err, results) => {
+        if (err) {
+          console.error('Error interacting with database', err, data);
+        } else {
+          cb(null, results);
+        }
+      });
+    
+      conn.release();
     });
   },
 
@@ -56,13 +76,17 @@ module.exports = {
     var command = `SELECT id from users WHERE username = ? AND password = ?`;
     var params = [user, password];
     
-    db.query(command, params, (err, data) => {
-      if (err) {
-        console.error('Error interacting with login', err);
-      } else {
-        console.log('Processing login');
-        cb(null, data);
-      }
+    db.getConnection( (err, conn) => {
+      conn.query(command, params, (err, data) => {
+        if (err) {
+          console.error('Error interacting with login', err);
+        } else {
+          console.log('Processing login');
+          cb(null, data);
+        }
+      });
+
+      conn.release();
     });
   },
 
@@ -70,26 +94,34 @@ module.exports = {
     var command = `INSERT INTO users (username, password) VALUES (?, ?)`
     var params = [user, password];
 
-    db.query(command, params, (err, data) => {
-      if (err) {
-        console.error('Error signing up', err);
-      } else {
-        console.log('Processing signup');
-        cb(null, data);
-      }
-    })
+    db.getConnection( (err, conn) => {
+      conn.query(command, params, (err, data) => {
+        if (err) {
+          console.error('Error signing up', err);
+        } else {
+          console.log('Processing signup');
+          cb(null, data);
+        }
+      });
+
+      conn.release();
+    });
   },
 
   wallet: function(data, cb) {
     var command = `SELECT money from users WHERE id = ${data}`;
 
-    db.query(command, (err, data) => {
-      if (err) {
-        console.error('Error interacting with money', err);
-      } else {
-        console.log('Processing wallet');
-        cb(null, data);
-      }
+    db.getConnection( (err, conn) =>{
+      conn.query(command, (err, data) => {
+        if (err) {
+          console.error('Error interacting with money', err);
+        } else {
+          console.log('Processing wallet');
+          cb(null, data);
+        }
+      });
+
+      conn.release();
     });
   },
 
@@ -97,12 +129,16 @@ module.exports = {
     console.log('Inside updateWallet', userId, money);
     var command = `UPDATE users SET money = ${money} WHERE id = ${userId}`;
 
-    db.query(command, (err, data) => {
-      if (err) {
-        console.error('Error updating wallet in database', err);
-      } else {
-        console.log('Processing update');
-      }
+    db.getConnection( (err, conn) =>{
+      conn.query(command, (err, data) => {
+        if (err) {
+          console.error('Error updating wallet in database', err);
+        } else {
+          console.log('Processing update');
+        }
+      });
+
+      conn.release();
     });
   }
 }
