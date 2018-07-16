@@ -18,22 +18,7 @@ const Pokemon = (props) => (
         )}}
       )}
     </div>
-
-
-    {/* <Carousel interval={null} indicators={false} slide={false} wrap={false} >
-      {props.pokemon.map(poke => {
-        return(
-          <Carousel.Item>
-            <img src={poke.pokeNorm} height={250} width={250} alt='250x250' onClick={ () => { return props.change(poke) }} />
-            <Carousel.Caption>
-              <h3>{poke.pokeName}</h3>
-              <p onClick={ () => { return props.delete(poke) }}>Sell</p>
-            </Carousel.Caption>
-          </Carousel.Item>
-        )
-      })}
-      </Carousel> */}
-
+    
   </div>
 )
 

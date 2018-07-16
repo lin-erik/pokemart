@@ -40,7 +40,7 @@ app.post('/user', (req, res) => {
 
   req.on('data', (data) => {body = JSON.parse(data)})
      .on('end', () => {
-       console.log('WALLET being processed', body)
+       console.log('WALLET being processed')
 
        models.wallet(body, (err, data) => {
           res.send(data);
@@ -53,7 +53,7 @@ app.post('/wallet', (req, res) => {
 
   req.on('data', (data) => {body = JSON.parse(data)})
      .on('end', () => {
-       console.log('UPDATING WALLET', body)
+       console.log('UPDATING WALLET')
 
        models.updateWallet(body, (err, data) => {
           res.send();

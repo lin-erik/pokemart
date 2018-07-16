@@ -30,8 +30,6 @@ class App extends React.Component {
       this.setState({
         user: e.target.value
       });
-
-      console.log('The current user', this.state.user);
     }
 
     handlePasswordChange(e) {
@@ -53,8 +51,6 @@ class App extends React.Component {
         .then(res => res.json())
         .catch(err => console.error('Error logging in', err))
         .then(response => {
-          console.log('Log in response', response[0].id);
-
           if (response[0].id) {
             this.setState({
               userId: response[0].id,
@@ -113,23 +109,6 @@ class App extends React.Component {
         </div>
       )
     }
-
-    //   <Router>
-    //     <div>
-          {/* <Route path='/' exact render={() => ( */}
-            // <Login handleUserChange={this.handleUserChange} handlePasswordChange={this.handlePasswordChange} handleLogin={this.handleLogin} login={this.state.login} />
-          {/* )} /> */}
-
-      //     <Landing
-
-          
-      //     <Route path='/home' component={Landing} />
-
-
-      //   </div>
-      // </Router>
-
-    // );
   }
 };
 

@@ -62,8 +62,6 @@ class Landing extends React.Component {
             value: Math.floor(Math.random() * (2500 + 1)),
             bought: false
           });
-
-          console.log('This is the response from database', response);
         });
     }
 
@@ -74,7 +72,7 @@ class Landing extends React.Component {
       var updatedWallet = (this.state.wallet - this.state.value);
 
       if (updatedWallet < 0) {
-        return alert(`You can't afford this Pokemon, you're broke`);
+        return alert(`You can't afford this Pokemon, sell some Pokemon to make more money`);
       } else {
         this.setState({
           pokemon: updated,
@@ -99,7 +97,7 @@ class Landing extends React.Component {
             pokemon: response
           });
 
-          console.log('This is the list of Pokemon', this.state.pokemon);
+          console.log('All user Pokemon: ', this.state.pokemon);
         });
     }
 
@@ -111,15 +109,13 @@ class Landing extends React.Component {
         .then(res => res.json())
         .catch(err => console.error('Error getting money', err))
         .then(response => {
-          console.log('How much money', response);
-          
           if (response[0].money) {
             this.setState({
               wallet: response[0].money
             });
           }
           
-          console.log('User money', this.state.wallet);
+          console.log('Amount of money the user has: ', this.state.wallet);
         });
     }
 

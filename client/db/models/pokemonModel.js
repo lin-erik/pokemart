@@ -24,7 +24,7 @@ module.exports = {
     var command = `DELETE from userAndPokemon WHERE user_id = ${userId} AND poke_id = ${pokemonId}`;
 
     db.query(command, (err, data) => {
-      console.log('Deleted from mySQL', userId, pokemonId);
+      console.log('Deleted from mySQL');
     });
   },
 
@@ -60,7 +60,7 @@ module.exports = {
       if (err) {
         console.error('Error interacting with login', err);
       } else {
-        console.log('Processing login', data);
+        console.log('Processing login');
         cb(null, data);
       }
     });
@@ -74,7 +74,7 @@ module.exports = {
       if (err) {
         console.error('Error signing up', err);
       } else {
-        console.log('Processing signup', data);
+        console.log('Processing signup');
         cb(null, data);
       }
     })
@@ -87,7 +87,7 @@ module.exports = {
       if (err) {
         console.error('Error interacting with money', err);
       } else {
-        console.log('Processing wallet', data);
+        console.log('Processing wallet');
         cb(null, data);
       }
     });
@@ -101,7 +101,7 @@ module.exports = {
       if (err) {
         console.error('Error updating wallet in database', err);
       } else {
-        console.log('Processing update', data);
+        console.log('Processing update');
       }
     });
   }
