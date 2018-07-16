@@ -66,14 +66,12 @@ class Landing extends React.Component {
     }
 
     handleBuy(poke) {
-      var updated = this.state.pokemon;
-      updated.push(poke);
-
       var updatedWallet = (this.state.wallet - this.state.value);
+      
+      if (updatedWallet > 0) {
+        var updated = this.state.pokemon;
+        updated.push(poke);
 
-      if (updatedWallet < 0) {
-        return alert(`You can't afford this Pokemon, sell some Pokemon to make more money`);
-      } else {
         this.setState({
           pokemon: updated,
           wallet: updatedWallet,
@@ -82,6 +80,8 @@ class Landing extends React.Component {
 
         script.buyPokemon(poke, this.props.userId);
         script.updateWallet(this.props.userId, updatedWallet);
+      } else {
+        return alert(`You can't afford this Pokemon, sell some Pokemon to make more money`);
       }
     }
 

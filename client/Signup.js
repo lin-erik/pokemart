@@ -5,7 +5,7 @@ const Signup = (props) => {
   return(
       <div>
         <Form horizontal>
-          <FormGroup controlId='formUsername'>
+          <FormGroup controlId='formSignUpUsername'>
             <Col sm={2}>
               Username
             </Col>
@@ -14,7 +14,7 @@ const Signup = (props) => {
             </Col>
           </FormGroup>
 
-          <FormGroup controlId='formPassword'>
+          <FormGroup controlId='formSignUpPassword'>
             <Col sm={2}>
               Password
             </Col>
