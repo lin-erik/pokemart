@@ -3,9 +3,9 @@ import ReactDOM from 'react-dom';
 const script = require('./scripts/index.js');
 import { Button, Collapse, Well } from 'react-bootstrap';
 
-import Login from './Login.js';
-import Landing from './Landing.js';
-import Signup from './Signup.js';
+import Login from './components/Login.jsx';
+import Landing from './components/Landing.jsx';
+import Signup from './components/Signup.jsx';
 
 class App extends React.Component {
   constructor(props) {

@@ -1,5 +1,5 @@
 const express = require('express');
-const models = require('../client/db/models/pokemonModel.js');
+const models = require('./db/models/pokemonModel.js');
 const path = require('path');
 const cors = require('cors');
 

@@ -1,8 +1,10 @@
 var webpack = require('webpack');
 var path = require('path');
 
+var SRC_DIR = path.join(__dirname + '/client');
+
 module.exports = {
-  entry: path.resolve('./client/App.js'),
+  entry: `${SRC_DIR}/App.jsx`,
   output: {
     filename: 'bundle.js',
     path: path.resolve('./client/dist')

@@ -1,10 +1,10 @@
 import React from 'react';
 
-import Header from './Header.js';
-import Pokemon from './Pokemon.js';
-import Middle from './Middle.js';
+import Header from './Header.jsx';
+import Pokemon from './Pokemon.jsx';
+import Middle from './Middle.jsx';
 
-const script = require('./scripts/index.js');
+const script = require('../scripts/index.js');
 
 class Landing extends React.Component {
   constructor(props) {

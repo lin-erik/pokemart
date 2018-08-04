@@ -1,5 +1,5 @@
 import React from 'react';
-const script = require('./scripts/index.js');
+const script = require('../scripts/index.js');
 
 const DailyPokemon = (props) => {
     if (props.bought) {

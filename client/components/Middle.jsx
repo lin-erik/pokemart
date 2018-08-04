@@ -1,7 +1,7 @@
 import React from 'react';
 
-import CurrentPokemon from './CurrentPokemon.js';
-import DailyPokemon from './DailyPokemon.js';
+import CurrentPokemon from './CurrentPokemon.jsx';
+import DailyPokemon from './DailyPokemon.jsx';
 
 const Middle = (props) => {
   return(

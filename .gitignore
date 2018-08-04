@@ -1,2 +1,3 @@
 node_modules/
-client/db/config.js
+server/db/config.js
+client/dist/bundle.js
